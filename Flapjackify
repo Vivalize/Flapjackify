@@ -1,17 +1,25 @@
+# CreateCuraModel
+# Created by Andrew and Marko Ritachka on 5/6/17.
 import sys
 import os
 import glob
-# CreateCuraModel
-# Created by Andrew and Marko Ritachka on 5/6/17.
+
+# Uncompress it
+
 print ("Uncompressing Tar...")
 des = os.getcwd().replace(" ", "\ ")
 tar = sys.argv[1].replace(" ", "\ ")
 os.system("tar -xf "+tar+" -C "+des)
 print ("Done!")
+print ("Converting Files...(eps)")
+for file in glob.glob("*.svg"):
+	filedes = file.replace(".svg", ".eps").replace(" ", "\ ")
+	filesrc = file.replace(" ", "\ ")
+	os.system("inkscape -E "+des+"/"+filedes+" "+des+"/"+filesrc)
+print ("Done!")
+	
+	
 
-
-# Find the tar file we saved in the python script
-# Uncompress it
 # for each unzipped file:
 	# Convert the .svg to an .eps
 	# Convert the .eps to an .dxf
