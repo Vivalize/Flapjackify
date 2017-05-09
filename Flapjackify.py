@@ -12,15 +12,15 @@ tar = sys.argv[1].replace(" ", "\ ")
 os.system("tar -xf "+tar+" -C "+des)
 print ("Done!")
 
-# Convert the .svg to an .eps to .dxf
+# Convert the .svg to an .ps to .dxf
 
 print ("Converting Files...")
 for file in glob.glob("*.svg"):
 	print ("Converting File "+file[0:2])
-	filedes = file.replace(".svg", ".eps").replace(" ", "\ ")
+	filedes = file.replace(".svg", ".ps").replace(" ", "\ ")
 	filesrc = file.replace(" ", "\ ")
-	os.system("inkscape -E "+des+"/"+filedes+" "+des+"/"+filesrc)
-	os.system("pstoedit -dt -f dxf:-polyaslines\ -mm "+des+"/"+filedes+" "+des+"/"+filedes.replace(".eps", ".dxf")+" 2> /dev/null")
+	os.system("inkscape -P "+des+"/"+filedes+" "+des+"/"+filesrc)
+	os.system("pstoedit -dt -f dxf:-polyaslines\ -mm "+des+"/"+filedes+" "+des+"/"+filedes.replace(".ps", ".dxf")+" 2> /dev/null")
 print ("Done!")
 	
 	
