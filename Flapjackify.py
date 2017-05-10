@@ -40,6 +40,8 @@ for stl in lista[1:]:
 	print (mgfile)
 	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfil)
 	mgfile = mgfil
+print ("Finished! Your final file is called 'final.stl' and is located at")
+print (mgfil)
 
 	
 
