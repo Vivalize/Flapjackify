@@ -42,6 +42,18 @@ for stl in lista[1:]:
 	mgfile = mgfil
 print ("Finished! Your final file is called 'final.stl' and is located at")
 print (mgfil)
+os.system("cp /Users/andrewritachka/GitHub/Flapjackify/final.stl /Users/andrewritachka/GitHub/final.stl")
+
+#Delete all leftover files
+
+os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.svg")
+os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.stl")
+os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.dxf")
+os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.ps")
+os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.scad")
+os.system("cp /Users/andrewritachka/GitHub/final.stl /Users/andrewritachka/GitHub/Flapjackify/final.stl")
+os.system("rm /Users/andrewritachka/GitHub/final.stl")
+
 
 	
 
