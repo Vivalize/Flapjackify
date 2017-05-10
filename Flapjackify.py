@@ -12,11 +12,11 @@ tar = sys.argv[1].replace(" ", "\ ")
 os.system("tar -xf "+tar+" -C "+des)
 print ("Done!")
 
-# Convert the .svg to .ps to .dxf to .scad
+# Convert the .svg to .ps to .dxf to .scad to .stl
 
 print ("Converting Files...")
 for file in glob.glob("*.svg"):
-	print ("Converting File "+file[0:2])
+	print ("	Converting File "+file[0:2])
 	fileheight = int(file[0:2]) * -10
 	filedes = file.replace(".svg", ".ps").replace(" ", "\ ")
 	filesrc = file.replace(" ", "\ ")
@@ -27,9 +27,20 @@ for file in glob.glob("*.svg"):
 	scad.write("\nlinear_extrude(height = 10)")
 	scad.write("\nimport(\""+des+"/"+file.replace(".svg", ".dxf")+"\");")
 	scad.close()
+	os.system("openscad -o "+des+"/"+file.replace(".svg", ".stl").replace(" ", "\ ")+" " +des+"/"+file.replace(".svg", ".scad").replace(" ", "\ "))
 print ("Done!")
+lista = []
+for file in glob.glob("*.stl"):
+	lista.append(file)
+mgfile = des+"/"+lista[0].replace(" ", "\ ")
+mgfil = des+"/"+"final.stl"
+for stl in lista[1:]:
+	stl = des+"/"+stl.replace(" ", "\ ")
+	print (stl)
+	print (mgfile)
+	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfil)
+	mgfile = mgfil
+
 	
-	# Create a .scad file with proper lift off the ground
-	
-	# Export the .scad file into an .stl
+
 # Run a python script to combine all the .stls into one .amf
