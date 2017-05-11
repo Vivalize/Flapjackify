@@ -35,7 +35,7 @@ for file in glob.glob("*.stl"):
 mgfile = des+"/"+lista[0].replace(" ", "\ ")
 for stl in lista[1:]:
 	stl = des+"/"+stl.replace(" ", "\ ")
-	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfile+"2> /dev/null")
+	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfile+" > /dev/null")
 tarreplace = tar.replace(".tar", ".stl")
 print (colored("Finished! Your final file is located at '", "cyan")+colored(tarreplace, "red")+colored("'", "cyan"))
 
