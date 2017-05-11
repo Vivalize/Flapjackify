@@ -8,10 +8,9 @@ import glob
 
 print ("Uncompressing Tar...")
 des = os.getcwd().replace(" ", "\ ")
-tar = sys.argv[1].replace(" ", "\ ")
+tar = sys.argv[1]
 os.system("tar -xf "+tar+" -C "+des)
 print ("Done!")
-
 # Convert the .svg to .ps to .dxf to .scad to .stl
 
 print ("Converting Files...")
@@ -33,26 +32,20 @@ lista = []
 for file in glob.glob("*.stl"):
 	lista.append(file)
 mgfile = des+"/"+lista[0].replace(" ", "\ ")
-mgfil = des+"/"+"final.stl"
 for stl in lista[1:]:
 	stl = des+"/"+stl.replace(" ", "\ ")
 	print (stl)
 	print (mgfile)
-	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfil)
-	mgfile = mgfil
-print ("Finished! Your final file is called 'final.stl' and is located at")
-print (mgfil)
-os.system("cp /Users/andrewritachka/GitHub/Flapjackify/final.stl /Users/andrewritachka/GitHub/final.stl")
+	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfile)
+print ("Finished! Your final file is located at '"+tar.replace(".tar", ".stl")+"'")
+
+os.system("cp "+mgfile+" "+tar.replace(".tar", ".stl"))
 
 #Delete all leftover files
 
-os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.svg")
-os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.stl")
-os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.dxf")
-os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.ps")
-os.system("rm /Users/andrewritachka/GitHub/Flapjackify/"+"*.scad")
-os.system("cp /Users/andrewritachka/GitHub/final.stl /Users/andrewritachka/GitHub/Flapjackify/final.stl")
-os.system("rm /Users/andrewritachka/GitHub/final.stl")
+endings = ["*.svg", "*.stl", "*.dxf", "*.ps", "*.scad"]
+for ending in endings:
+	os.system("rm "+des+"/"+ending)
 
 
 	
