@@ -1,21 +1,22 @@
 # CreateCuraModel
 # Created by Andrew and Marko Ritachka on 5/6/17.
+from termcolor import colored
 import sys
 import os
 import glob
 
 # Uncompress it
 
-print ("Uncompressing Tar...")
+print (colored("Uncompressing Tar...", "green"))
 des = os.getcwd().replace(" ", "\ ")
 tar = sys.argv[1]
 os.system("tar -xf "+tar+" -C "+des)
-print ("Done!")
+print (colored("Done!", "yellow"))
 # Convert the .svg to .ps to .dxf to .scad to .stl
 
-print ("Converting Files...")
+print (colored("Converting Files...", "green"))
 for file in glob.glob("*.svg"):
-	print ("	Converting File "+file[0:2])
+	print (colored("	Converting File "+file[0:2], "magenta"))
 	fileheight = int(file[0:2]) * -10
 	filedes = file.replace(".svg", ".ps").replace(" ", "\ ")
 	filesrc = file.replace(" ", "\ ")
@@ -27,17 +28,16 @@ for file in glob.glob("*.svg"):
 	scad.write("\nimport(\""+des+"/"+file.replace(".svg", ".dxf")+"\");")
 	scad.close()
 	os.system("openscad -o "+des+"/"+file.replace(".svg", ".stl").replace(" ", "\ ")+" " +des+"/"+file.replace(".svg", ".scad").replace(" ", "\ "))
-print ("Done!")
+print (colored("Done!", "yellow"))
 lista = []
 for file in glob.glob("*.stl"):
 	lista.append(file)
 mgfile = des+"/"+lista[0].replace(" ", "\ ")
 for stl in lista[1:]:
 	stl = des+"/"+stl.replace(" ", "\ ")
-	print (stl)
-	print (mgfile)
-	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfile)
-print ("Finished! Your final file is located at '"+tar.replace(".tar", ".stl")+"'")
+	os.system("admesh/admesh --merge="+mgfile+" "+stl+" --write-binary-stl="+mgfile+"2> /dev/null")
+tarreplace = tar.replace(".tar", ".stl")
+print (colored("Finished! Your final file is located at '", "cyan")+colored(tarreplace, "red")+colored("'", "cyan"))
 
 os.system("cp "+mgfile+" "+tar.replace(".tar", ".stl"))
 
